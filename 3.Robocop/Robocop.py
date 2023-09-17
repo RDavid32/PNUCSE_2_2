@@ -44,4 +44,4 @@ for q in t:
         if direction_y < 0:
             print(graph[start_point][0] , graph[start_point][1] - subtract_time)
         elif direction_y >0:
-            print(graph[start_point][0] , graph[start_point][1] + subtract_time)
+            print(x)
