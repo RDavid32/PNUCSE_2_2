@@ -55,7 +55,6 @@ for q in range(K):
     direction.append(check_gap(gap_x, gap_y))
 
 
-
 t = int(input())
 time1, time2 = check1, check2
 s1, s2 = check1, check2
