@@ -6,7 +6,6 @@ def find_best_coupon_combination(N, K, arr):
 
         if current_total_price == K:
             best_combination = max(best_combination,current_combination)[:]
-            
             return
         
         if current_total_price > K:
