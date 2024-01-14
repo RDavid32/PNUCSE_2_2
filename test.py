@@ -1,74 +1,33 @@
-class xfrac:
-    def __init__(self,a,b,c):
-        self.a = a
-        self.b = b
-        self.c = c
+data = {
+    1: [5, 6, 3],
+    2: [6, 9, 8],
+    3: [5, 1, 4, 9],
+    4: [8, 7, 3],
+    5: [1, 3],
+    6: [2, 8, 1],
+    7: [9, 4],
+    8: [6, 2, 4],
+    9: [2, 3, 7]
+}
 
-    def evaluate(self): 
-        numerator, denominator = self.calculate_fraction()
-        common_divisor = self.gcd(numerator, denominator)
-        numerator //= common_divisor
-        denominator //= common_divisor
-        return numerator, denominator
+if __name__ == "__main__":
+    start_u, start_v = map(int,input().split())
+    current_vertax = data[start_u][data[start_u].index(start_v)-1] #시계 방향으로 돌때
+    past_vertax = start_u
+    print(start_v, start_u, end = ' ')
+    while current_vertax != start_v:
+        print(current_vertax, end = ' ')
+        check = current_vertax
+        current_vertax = data[current_vertax][data[current_vertax].index(past_vertax)-1] #시계 방향으로 돌때
+        past_vertax = check
+    print()
 
-    def calculate_fraction(self):
-        # 연분수 계산
-        #분자, 분모
-        numerator_a, denominator_a = self.get_fraction_parts(self.a)
-        numerator_b, denominator_b = self.get_fraction_parts(self.b)
-        numerator_c, denominator_c = self.get_fraction_parts(self.c)
+    current_vertax = data[start_v][data[start_v].index(start_u)-1] #반시계 방향으로 돌때
+    past_vertax = start_v
+    print(start_u, start_v, end = ' ')
+    while current_vertax != start_u:
+        print(current_vertax, end = ' ')
+        check = current_vertax
+        current_vertax = data[current_vertax][data[current_vertax].index(past_vertax)-1] #반시계 방향으로 돌때
+        past_vertax = check
 
-        # 분모를 계산
-        denominator = denominator_a * denominator_b * numerator_c
-
-        # 분자를 계산
-        numerator = numerator_a * denominator_b * numerator_c + denominator_a * numerator_b * denominator_c
-        return numerator, denominator
-
-    def get_fraction_parts(self, fraction_part):
-        # 숫자 또는 xfrac 객체의 분자와 분모를 반환
-        if isinstance(fraction_part, xfrac):
-            return fraction_part.calculate_fraction()
-        else:
-            return fraction_part, 1
-
-    def gcd(self, a, b):
-        # 최대공약수 계산
-        while b != 0:
-            a, b = b, a % b
-        return a
-
-
-def parse(s):
-    stack = []
-    try:
-        for token in s:
-            if token == '(':
-                stack.append([])
-            elif token.isdigit():
-                stack[-1].append(int(token))
-            else:  
-                if stack:
-                    top = stack.pop()  
-
-                    if stack == []:
-                        stack.append(xfrac(*top))
-                    else:
-                        stack[-1].append(xfrac(*top))
-
-                else:
-                    exit(0)
-
-        while True:
-            if isinstance(stack[0], xfrac):
-                return stack[0]
-            stack = stack[0]
-    except:
-        print(-1)
-        exit(0)
-
-n = int(input())
-s = input().strip().split()
-
-result = parse(s)
-print(*result.evaluate())
